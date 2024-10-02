@@ -12,6 +12,7 @@ exp2gcn_blockwise(
   cor_method = "pearson",
   TOM_type = NULL,
   max_block_size = 5000,
+  min_module_size = 30,
   ...
 )
 }
@@ -39,6 +40,9 @@ inferred from network type specified in \strong{net_type}. Default: NULL.}
 
 \item{max_block_size}{Numeric indicating the maximum block size for module
 detection.}
+
+\item{min_module_size}{Numeric indicating the minimum module size.
+Default: 30.}
 
 \item{...}{Additional arguments to \code{WGCNA::blockwiseModules()}.}
 }

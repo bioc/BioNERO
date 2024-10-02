@@ -110,6 +110,8 @@ SFT_fit <- function(exp, net_type = "signed", rsquared = 0.8,
 #' @param TOM_type Character specifying the method to use to calculate a
 #' topological overlap matrix (TOM). If NULL, TOM type will be automatically
 #' inferred from network type specified in \strong{net_type}. Default: NULL.
+#' @param min_module_size Numeric indicating the minimum module size.
+#' Default: 30.
 #' @param return_cormat Logical indicating whether the correlation matrix
 #' should be returned. If TRUE (default), an element named `correlation_matrix`
 #' containing the correlation matrix will be included in the result list.
@@ -154,6 +156,7 @@ SFT_fit <- function(exp, net_type = "signed", rsquared = 0.8,
 exp2gcn <- function(
         exp, net_type = "signed", module_merging_threshold = 0.8,
         SFTpower = NULL, cor_method = "spearman", TOM_type = NULL,
+        min_module_size = 30,
         return_cormat = TRUE, verbose = FALSE
 ) {
 
@@ -190,7 +193,7 @@ exp2gcn <- function(
     # Detect coexpression modules
     if(verbose) { message("Detecting coexpression modules...") }
     original_mods <- dynamicTreeCut::cutreeDynamicTree(
-        dendro = geneTree, minModuleSize = 30, deepSplit = TRUE
+        dendro = geneTree, minModuleSize = min_module_size, deepSplit = TRUE
     )
 
     nmod <- length(unique(original_mods))
@@ -256,6 +259,8 @@ exp2gcn <- function(
 #' inferred from network type specified in \strong{net_type}. Default: NULL.
 #' @param max_block_size Numeric indicating the maximum block size for module
 #' detection.
+#' @param min_module_size Numeric indicating the minimum module size.
+#' Default: 30.
 #' @param ... Additional arguments to \code{WGCNA::blockwiseModules()}.
 #'
 #' @return A list containing the following elements: \itemize{
@@ -287,7 +292,7 @@ exp2gcn <- function(
 exp2gcn_blockwise <- function(
         exp, net_type = "signed", module_merging_threshold = 0.8,
         SFTpower = NULL, cor_method = "pearson", TOM_type = NULL,
-        max_block_size = 5000, ...
+        max_block_size = 5000, min_module_size = 30, ...
 ) {
 
     params <- list(
@@ -320,7 +325,7 @@ exp2gcn_blockwise <- function(
         power = SFTpower,
         networkType = net_type,
         TOMType = TOM_type,
-        minModuleSize = 30,
+        minModuleSize = min_module_size,
         mergeCutHeight = 1 - module_merging_threshold,
         ...
     )

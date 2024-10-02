@@ -11,6 +11,7 @@ exp2gcn(
   SFTpower = NULL,
   cor_method = "spearman",
   TOM_type = NULL,
+  min_module_size = 30,
   return_cormat = TRUE,
   verbose = FALSE
 )
@@ -36,6 +37,9 @@ One of "pearson", "biweight" or "spearman". Default: "spearman".}
 \item{TOM_type}{Character specifying the method to use to calculate a
 topological overlap matrix (TOM). If NULL, TOM type will be automatically
 inferred from network type specified in \strong{net_type}. Default: NULL.}
+
+\item{min_module_size}{Numeric indicating the minimum module size.
+Default: 30.}
 
 \item{return_cormat}{Logical indicating whether the correlation matrix
 should be returned. If TRUE (default), an element named `correlation_matrix`
